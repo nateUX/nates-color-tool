@@ -1,271 +1,301 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>Color Palette Maker</title>
-  </head>
-  <script src="w3color.js"></script>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Color Palette Maker</title>
+</head>
+<script src="w3color.js"></script>
 <style>
-  body{
+  body {
     font-family: Helvetica Neue, HelveticaNeue, Helvetica, segoe-ui_normal, "Segoe UI", Segoe, "Segoe WP", sans-serif;
     font-weight: 300;
-    color:#444444
+    color: #444444
   }
-  h1{
+
+  h1 {
     font-weight: 500;
     text-align: center;
   }
-  p{
+
+  p {
     font-size: 12px;
   }
-  .swatch{
+
+  .swatch {
     height: 70px;
     width: 190px;
     border-radius: 5px 5px 0px 0px;
   }
-  #lighterList, #darkerList, #satList, #desatList{
+
+  #lighterList,
+  #darkerList,
+  #satList,
+  #desatList {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     justify-content: center;
   }
-  .item{
-    margin:5px;
+
+  .item {
+    margin: 5px;
     box-shadow: 1px 1px 2px rgba(136, 136, 136, 0.32);
     border-radius: 5px;
   }
-  .item p{
+
+  .item p {
     margin: 4px 8px;
-    color:#444444;
+    color: #444444;
   }
-  .color-title{
-    font-size:16px;
+
+  .color-title {
+    font-size: 16px;
     font-weight: bold;
     margin-bottom: 4px;
   }
-  input{
-    border:none;
-    font-size:28px;
+
+  input {
+    border: none;
+    font-size: 28px;
     color: #999999;
     font-weight: 200;
-
   }
+
   .wrapper {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 10px;
     grid-auto-rows: minmax(100px, auto);
   }
-  .one{
+
+  .one {
     grid-column: 1;
     grid-row: 1;
   }
-  .two { 
-      grid-column: 2;
-      grid-row: 1;
+
+  .two {
+    grid-column: 2;
+    grid-row: 1;
   }
-  .three { 
-      grid-column: 3;
-      grid-row: 1;
+
+  .three {
+    grid-column: 3;
+    grid-row: 1;
   }
-  .four { 
-      grid-column: 4;
-      grid-row: 1;
+
+  .four {
+    grid-column: 4;
+    grid-row: 1;
   }
-#controls{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: center;
-  align-items: center;
-}
 
-#controls .label{
-  margin-right: 10px;
-}
-#color01{
-  width:120px;
-}
-#change{
-  width:57px;
-}
+  #controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+  }
 
+  #controls .label {
+    margin-right: 10px;
+  }
 
+  #color01 {
+    width: 120px;
+  }
 
+  #change {
+    width: 57px;
+  }
 </style>
-  
-  <body>
-    <div id="controls">
-      <div class="label">Base color</div> 
-      <input id="color01" type="text" value="#4386B9" class="w3-input w3-border" oninput="convertColor()" onchange="validateColor()" onkeydown="submitOnEnter(event)"> 
-      <div class="label">Change by</div>
-      <input type="number" name="change" id="change" oninput="convertColor()" onchange="validateColor()" onkeydown="submitOnEnter(event)" value="5" maxlength="2">%<p>
+
+<body>
+  <div id="controls">
+    <div class="label">Base color</div>
+    <input id="color01" type="text" value="#4386B9" class="w3-input w3-border" oninput="convertColor()" onchange="validateColor()"
+      onkeydown="submitOnEnter(event)">
+    <div class="label">Change by</div>
+    <input type="number" name="change" id="change" oninput="convertColor()" onchange="validateColor()" onkeydown="submitOnEnter(event)"
+      value="5" maxlength="2">%
+    <p>
+  </div>
+  <div class="wrapper">
+    <div class="col one">
+      <h1>More</h1>
+      <div id="lighterList"></div>
     </div>
-      <div class="wrapper">
-        <div class="col one">
-          <h1>Lighter</h1>
-          <div id="lighterList"></div>
-        </div>
-        <div class="col two">
-          <h1>Darker</h1>
-          <div id="darkerList"></div>
-        </div>
-        <div class="col three">
-          <h1>Saturated</h1>
-          <div id="satList"></div>
-        </div>
-        <div class="col four">
-          <h1>Desaturated</h1>
-          <div id="desatList"></div>
-        </div>
-      </div>
-  </body>
+    <div class="col two">
+      <h1>Darker</h1>
+      <div id="darkerList"></div>
+    </div>
+    <div class="col three">
+      <h1>Saturated</h1>
+      <div id="satList"></div>
+    </div>
+    <div class="col four">
+      <h1>Desaturated</h1>
+      <div id="desatList"></div>
+    </div>
+  </div>
+</body>
 
 <script>
   // You can also require other files to run in this process
   require('./renderer.js')
-  function clearColors(){
-    var lighterList =  document.getElementById("lighterList");
-    var darkerList =  document.getElementById("darkerList");
-    var satList =  document.getElementById("satList");
-    var desatList =  document.getElementById("desatList");
+
+  // clears all the previous swatches on the screen
+  function clearColors() {
+    var lighterList = document.getElementById("lighterList");
+    var darkerList = document.getElementById("darkerList");
+    var satList = document.getElementById("satList");
+    var desatList = document.getElementById("desatList");
     while (lighterList.hasChildNodes()) {
       lighterList.removeChild(lighterList.lastChild);
-    }    
+    }
     while (darkerList.hasChildNodes()) {
       darkerList.removeChild(darkerList.lastChild);
     }
     while (satList.hasChildNodes()) {
       satList.removeChild(satList.lastChild);
-    }    
+    }
     while (desatList.hasChildNodes()) {
       desatList.removeChild(desatList.lastChild);
     }
   }
-    
+
   function convertColor() {
     color = document.getElementById("color01").value;
     var change = document.getElementById("change");
-    if(change.value == ""){
+    if (change.value == "") {
       return;
     }
     if (color == "") {
-        validateColor();
-        return;
+      validateColor();
+      return;
     }
     color = color.toLowerCase();
     c = w3color(color);
-    darkBase = w3color(color); 
+    darkBase = w3color(color);
     satBase = w3color(color);
     desatBase = w3color(color);
-    if (c.valid) {        
-        clearColors();
-        var lightCount = 0; 
-        var darkCount = 0;
-        var satCount = 0;
-        var desatCount = 0;
-          // create lighterColors       
-          while (c.lightness < 1){
+    if (c.valid) {
+      clearColors();
+      //these are the counters for each while loop. they increment
+      var lightCount = 0;
+      var darkCount = 0;
+      var satCount = 0;
+      var desatCount = 0;
+      // create lighterColors       
+      while (c.lightness < 1) {
 
-            c.lighter(change.value);
+        c.lighter(change.value);
 
-            var newSwatch = createSwatch("lighter", lightCount +1, c.toHexString(), c.toHslString());
+        var newSwatch = createSwatch("lighter", lightCount + 1, c.toHexString(), c.toHslString());
 
-            document.getElementById("lighterList").appendChild(newSwatch);
-            lightCount++;
-          }
+        document.getElementById("lighterList").appendChild(newSwatch);
+        lightCount++;
+      }
 
-          //create darkerColors
-          while (darkBase.lightness > 0){
+      //create darkerColors
+      while (darkBase.lightness > 0) {
 
-            darkBase.darker(change.value);
+        darkBase.darker(change.value);
 
-            var newSwatch = createSwatch("darker", darkCount +1, darkBase.toHexString(), darkBase.toHslString());
+        var newSwatch = createSwatch("darker", darkCount + 1, darkBase.toHexString(), darkBase.toHslString());
 
-            document.getElementById("darkerList").appendChild(newSwatch);
-            darkCount++;
-          }   
-          //create satColors
-          while (satBase.sat < 1){
+        document.getElementById("darkerList").appendChild(newSwatch);
+        darkCount++;
+      }
+      //create satColors
+      while (satBase.sat < 1) {
 
-            satBase.saturate(change.value);
+        satBase.saturate(change.value);
 
-            var newSwatch = createSwatch("saturated", satCount +1, satBase.toHexString(), satBase.toHslString());
+        var newSwatch = createSwatch("saturated", satCount + 1, satBase.toHexString(), satBase.toHslString());
 
-            document.getElementById("satList").appendChild(newSwatch);
-            satCount++;
-          }   
-          
-          //create desatColors
-          while (desatBase.sat > 0){
+        document.getElementById("satList").appendChild(newSwatch);
+        satCount++;
+      }
 
-            desatBase.desaturate(change.value);
+      //create desatColors
+      while (desatBase.sat > 0) {
 
-            var newSwatch = createSwatch("desaturated", desatCount +1, desatBase.toHexString(), desatBase.toHslString());
+        desatBase.desaturate(change.value);
 
-            document.getElementById("desatList").appendChild(newSwatch);
-            desatCount++;
-          }    
+        var newSwatch = createSwatch("desaturated", desatCount + 1, desatBase.toHexString(), desatBase.toHslString());
+
+        document.getElementById("desatList").appendChild(newSwatch);
+        desatCount++;
+      }
 
     } else {
-        validateColor();
+      validateColor();
     }
-}
+  }
 
-function createSwatch(prefix, iteration, hsl, hex) {
+  function createSwatch(prefix, iteration, hsl, hex) {
+    // create a bunch of html elements to hold all the pieces of a "swatch". the itemNode is that actual parent container too all the other elements.
+    var itemNode = document.createElement("div");
+    var swatchNode = document.createElement("div");
+    var titlePNode = document.createElement("p");
+    var hexPNode = document.createElement("p");
+    var hslPNode = document.createElement("p");
 
-  var itemNode = document.createElement("div");
-  var swatchNode = document.createElement("div");
-  var titlePNode = document.createElement("p");
-  var hexPNode = document.createElement("p");            
-  var hslPNode = document.createElement("p");
+    //set the backround of the swatch part to the color.
+    swatchNode.style.backgroundColor = hex;
 
-  swatchNode.style.backgroundColor = hex;  
-  
-  itemNode.className = "item";
-  swatchNode.className = "swatch";
-  titlePNode.className = "color-title";
-  hexPNode.className = "";            
-  hslPNode.className = "";
+    //assign classes to all the elements so they can by styled.
+    itemNode.className = "item";
+    swatchNode.className = "swatch";
+    titlePNode.className = "color-title";
+    hexPNode.className = "";
+    hslPNode.className = "";
 
-  var title = document.createTextNode(prefix +"-" + ((iteration) * change.value));
-  var hex = document.createTextNode(hex);
-  var hsl = document.createTextNode(hsl);
+    //auto-generate the name for the title
+    var title = document.createTextNode(prefix + "-" + ((iteration) * change.value));
+    //add the values to each item...for awareness of how the values change and for some easy copy/pasting.
+    var hex = document.createTextNode(hex);
+    var hsl = document.createTextNode(hsl);
 
-  titlePNode.appendChild(title);
-  hexPNode.appendChild(hex);
-  hslPNode.appendChild(hsl);
+    //put the text elements inside their respective HTML elements
+    titlePNode.appendChild(title);
+    hexPNode.appendChild(hex);
+    hslPNode.appendChild(hsl);
 
-  itemNode.appendChild(swatchNode);
-  itemNode.appendChild(titlePNode);
-  itemNode.appendChild(hexPNode);
-  itemNode.appendChild(hslPNode);
+    //append all the children elements inside the main itemNode. Order matters here since each item is added to the end.
+    itemNode.appendChild(swatchNode);
+    itemNode.appendChild(titlePNode);
+    itemNode.appendChild(hexPNode);
+    itemNode.appendChild(hslPNode);
+
+    //send everything back as one big ole thing.
+    return itemNode;
+
+  }
 
 
-
-  
-
-  return itemNode;
-
-}
-
-function validateColor() {
+  function validateColor() {
     var color, c, x, i, l;
     color = document.getElementById("color01").value;
     c = w3color(color);
-    if (color == "" || !c.valid) {   
+    if (color == "" || !c.valid) {
 
-    } else {    
-        convertColor();
+    } else {
+      convertColor();
     }
-}
-function submitOnEnter(e) {
+  }
+
+  function submitOnEnter(e) {
     keyboardKey = e.which || e.keyCode;
-    if (keyboardKey == 13) {
-        validateColor();
-    }
-}
 
-convertColor();
-  </script>
+    //13 is the enter key
+    if (keyboardKey == 13) {
+      validateColor();
+    }
+  }
+
+  convertColor();
+</script>
+
 </html>
