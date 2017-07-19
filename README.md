@@ -1,7 +1,11 @@
 
 
-# parametric-color-generator
-Creates scales from a base color value and increment value
+# Parametric Color Generator
+Creates scales from a base color value and increment value.
+
+This little app (built on Electron) was inspired by a blog post from UXPin CEO, Marcin Treder regarding defining a more structured color palette for their product. That post can be read here [One Color Palette to Rule them All](https://medium.com/@marcintreder/design-system-sprint-2-one-color-palette-to-rule-them-all-d0114ed1f659).
+
+In that post he mentions a quick tool he built, with Electron, for a simple task of generating colors based on a base value and an increment. Seemed simple enough, so I gave it a shot as well. This bit repo is a product of that effort. 
 
 ## To Use
 
@@ -22,5 +26,5 @@ Note: If you're using Linux Bash for Windows, [see this guide](https://www.howto
 
 ## License
 
-[MIT)](LICENSE.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
