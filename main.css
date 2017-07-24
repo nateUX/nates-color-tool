@@ -1,0 +1,104 @@
+body, button {
+    font-family: Helvetica Neue, HelveticaNeue, Helvetica, segoe-ui_normal, "Segoe UI", Segoe, "Segoe WP", sans-serif;
+    font-weight: 300;
+    color: #444444
+  }
+  body{
+    padding:10px;
+  }
+
+  h1 {
+    font-weight: 500;
+    text-align: center;
+  }
+
+  p, button {
+    font-size: 14px;
+  }
+
+  .swatch {
+    height: 70px;
+    width: 190px;
+    border-radius: 5px 5px 0px 0px;
+  }
+
+  #lighterList,
+  #darkerList,
+  #satList,
+  #desatList {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .item {
+    margin: 5px;
+    box-shadow: 1px 1px 2px rgba(136, 136, 136, 0.32);
+    border-radius: 5px;
+  }
+
+  .item p {
+    margin: 4px 8px;
+    color: #444444;
+  }
+
+  .color-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  input {
+    border: none;
+    font-size: 28px;
+    color: #999999;
+    font-weight: 200;
+  }
+
+  .wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+  }
+
+  .one {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .two {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .three {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .four {
+    grid-column: 4;
+    grid-row: 1;
+  }
+
+  #controls {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #controls .label {
+    margin-right: 10px;
+  }
+
+  #color01 {
+    width: 120px;
+  }
+
+  #change {
+    width: 57px;
+  }

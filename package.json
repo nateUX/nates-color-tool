@@ -1,22 +1,23 @@
 {
-  "name": "electron-quick-start",
-  "version": "1.0.0",
-  "description": "A minimal Electron application",
+  "name": "nates-color-tool",
+  "version": "0.1.0",
+  "description": "A small color tool for generating a color scale and checking contrast.",
+  "productName": "Nates Color Tool",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
   },
-  "repository": "https://github.com/electron/electron-quick-start",
+  "repository": "https://github.com/nateUX/parametric-color-generator",
   "keywords": [
-    "Electron",
-    "quick",
-    "start",
-    "tutorial",
-    "demo"
   ],
-  "author": "GitHub",
-  "license": "CC0-1.0",
+  "author": "Nathan Mitchell",
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml":"^3.9.0",
+    "fs-extra":"^4.0.0"
+  },
   "devDependencies": {
-    "electron": "~1.6.2"
+    "electron": "^1.6.11",
+    "electron-packager": "^8.7.2"
   }
 }

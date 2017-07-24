@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Nate's Color Tool</title>
+</head>
+<script src="w3color.js"></script>
+<link href="main.css" rel="stylesheet">
+<style>
+    .wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 33%);
+        grid-gap: 10px;
+        grid-auto-rows: minmax(100px, auto);
+    }
+
+    h2 {
+        margin: 0px;
+    }
+
+
+    #color01,
+    #color02 {
+        width: 120px;
+    }
+
+    .item {
+        width: 300px;
+        margin: auto;
+    }
+
+    #example {
+        width: 100%;
+        height: 100px;
+        text-align: center;
+    }
+
+    #foregroundExample {
+        font-size: 12px;
+        font-weight: normal;
+        line-height: 100px;
+    }
+
+
+    .colOne {
+        grid-column: 1;
+        text-align: center;
+    }
+
+    .coltwo {
+        grid-column: 2;
+    }
+
+    .colThree {
+        grid-column: 3;
+        text-align: center;
+    }
+
+    .rowTwo {
+        grid-row: 2;
+    }
+
+    .rowOne {
+        grid-row: 1;
+        height: 40px;
+    }
+    /* Style the tab */
+
+    div.tab {
+        overflow: hidden;
+        /* border: 1px solid #ccc; */
+        /* background-color: #f1f1f1; */
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+    /* Style the buttons inside the tab */
+
+    div.tab button {
+        background-color: inherit;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        width: 100%;
+    }
+    /* Change background color of buttons on hover */
+
+    div.tab button:hover {
+        background-color: #ddd;
+    }
+    /* Create an active/current tablink class */
+
+    div.tab button.active {
+        /* background-color: #ccc; */
+        font-weight: 700;
+    }
+    /* Style the tab content */
+
+    .tabcontent {
+        display: none;
+        padding: 6px 12px;
+        border-top: none;
+    }
+
+    button.presetButton {
+        display: block;
+        width: 100%;
+        height: 40px;
+        padding: 0;
+        border: none;
+        text-align: left;
+        line-height: 40px;
+        padding-left: 8px;
+        background-color: white;
+    }
+
+    button.presetButton:hover {
+        background-color: #e8e8e8;
+    }
+
+    button.presetButton div {
+        pointer-events: none;
+    }
+    #custom, #custom2{
+        margin-top: 10px;
+    }
+
+    #tests {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 0px 10px;
+        grid-auto-rows: minmax(20px, auto);
+        margin: 10px 0px 10px 8px;
+    }
+
+    #tests p {
+        padding: 0px;
+        margin: 2px;
+    }
+
+    #contrastTitle {
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: left;
+        font-weight: 400;
+    }
+
+    #contrast {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: center;
+    }
+
+    #nAA,
+    #nAAA,
+    #lAA,
+    #lAAA {
+        justify-self: center;
+        width: 100%;
+        text-align: center;
+        height: 30px;
+        line-height: 30px;
+        margin: 2px;
+    }
+
+    #AATitle {
+        grid-column: 1;
+        grid-row: 2;
+        justify-self: left;
+        font-weight: 400;
+    }
+
+    #nAA {
+        grid-column: 2;
+        grid-row: 2;
+    }
+
+    #nAAA {
+        grid-column: 2;
+        grid-row: 4;
+    }
+
+    #AAATitle {
+        grid-column: 1;
+        grid-row: 4;
+        justify-self: left;
+        font-weight: 400;
+    }
+
+    #lAA {
+        grid-column: 2;
+        grid-row: 3;
+    }
+
+    #lAAA {
+        grid-column: 2;
+        grid-row: 5;
+    }
+
+    .fail {
+        background-color: #b30000;
+        color: #FFFFFF !important;
+        font-weight: 500;
+    }
+
+    .pass {
+        background-color: #004d00;
+        color: #FFFFFF !important;
+        font-weight: 500;
+    }
+</style>
+
+<body>
+
+    <div id="controls">
+        <h1>Contrast Checker</h1>
+        <div class="label"><a href="index.html">Color palette generator</a></div>
+    </div>
+    <div class="wrapper">
+        <div class="colOne">
+            <h2 class="rowOne">Foreground</h2>
+            <div class="rowTwo">
+                <div class="tab">
+                    <button id="defaultForeOpen" class="tablinksFore" onclick="openForegroundTab(event, 'custom')">Custom</button>
+                    <button class="tablinksFore" onclick="openForegroundTab(event, 'preset')">Preset</button>
+                </div>
+                <div id="custom" class="tabcontentFore">
+                    <input id="color01" type="text" value="#000000" class="w3-input w3-border" oninput="convertColor('color01', 'relLum1')" onchange="validateColor('color01', 'relLum1')"
+                        onkeydown="submitOnEnter(event, 'color01','relLum1')">
+
+                    <div class="label">Relative luminance</div>
+                    <p id="relLum1"></p>
+                </div>
+
+                <div id="preset" class="tabcontentFore">
+                    <div id="foregroundPresetList"></div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="colTwo">
+            <div class="rowOne"></div>
+            <div class="rowTwo">
+                <div class="item">
+                    <div id="example" class="swatch">
+                        <p id="foregroundExample">Foreground</p>
+                    </div>
+                    <div id="tests">
+                        <p id="contrastTitle">Contrast ratio</p>
+                        <p id="contrast"></p>
+                        <p id="AATitle">AA</p>
+                        <p id="nAA">Normal text</p>
+                        <p id="lAA">Large text(18px+)</p>
+                        <p id="AAATitle">AAA</p>
+                        <p id="nAAA">Normal text</p>
+                        <p id="lAAA">Large text(18px+)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="colThree">
+            <h2 class="rowOne">Background</h2>
+            <div class="rowTwo">
+                <!-- The background tab controls -->
+                <div class="tab">
+                    <button id="defaultBackOpen" class="tablinksBack" onclick="openBackroundTab(event, 'custom2')">Custom</button>
+                    <button class="tablinksBack" onclick="openBackroundTab(event, 'preset2')">Preset</button>
+                </div>
+                <!-- The background tabs -->
+                <div id="custom2" class="tabcontentBack">
+                    <input id="color02" type="text" value="#FF0000" class="w3-input w3-border" oninput="convertColor('color02','relLum2')" onchange="validateColor('color02','relLum2')"
+                        onkeydown="submitOnEnter(event, 'color02','relLum2')">
+                    <div class="label">Relative luminance</div>
+                    <p id="relLum2"></p>
+                </div>
+                <div id="preset2" class="tabcontentBack">
+                    <div id="backgroundPresetList"></div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</body>
+
+<script>
+    // You can also require other files to run in this process
+    require('./renderer.js')
+    var yaml = require('js-yaml');
+    var fs = require('fs-extra');
+    var path = require('path');
+
+
+    function init() {
+        // console.log(appPath);
+        convertColor('color01', 'relLum1');
+        convertColor('color02', 'relLum2');
+        evalContrast();
+        // Get document, or throw exception on error
+        var file = path.join(__dirname, '/data/colors-editor.yml');
+        try {
+            var colors = yaml.safeLoad(fs.readFileSync(file, 'utf8'));
+            var selectForeground = document.getElementById("foregroundPresetList");
+            var selectBackground = document.getElementById("backgroundPresetList");
+            // console.log(colors);
+            for (var i = 0; i < colors.length; i++) {
+                if (colors[i].type == null) {
+                    var opt = colors[i].name;
+                    var val = colors[i].value;
+                    var el = document.createElement("button");
+
+                    el.textContent = opt;
+                    var sw = document.createElement("div");
+                    sw.style.backgroundColor = val;
+                    sw.style.width = '80px';
+                    sw.style.height = '100%';
+                    sw.style.display = "inline-block";
+                    sw.style.cssFloat = 'right';
+                    el.appendChild(sw);
+                    el.value = val;
+                    el.onclick = function () {
+                        applyPresetButton('foreground', event)
+                    };
+                    el.className = 'presetButton';
+                    var el2 = el.cloneNode(true);
+                    el2.onclick = function () {
+                        applyPresetButton('background', event)
+                    };
+                    selectForeground.appendChild(el);
+                    selectBackground.appendChild(el2);
+                }
+            }
+        } catch (e) {
+            console.log(e);
+            alert(e);
+        }
+        document.getElementById("defaultForeOpen").click();
+        document.getElementById("defaultBackOpen").click();
+
+    }
+
+    function applyPresetButton(arg, ev) {
+        switch (arg) {
+            case 'foreground':
+                var colorVal = ev.target.value;
+                document.getElementById('color01').value = colorVal;
+                validateColor('color01', 'relLum1');
+                break
+            case 'background':
+                var colorVal = ev.target.value;
+                document.getElementById('color02').value = colorVal;
+                validateColor('color02', 'relLum2');
+                break
+        }
+
+    }
+
+    function evalContrast() {
+        var L1, L2, ratio;
+        L1 = document.getElementById('relLum1').innerHTML;
+        L2 = document.getElementById('relLum2').innerHTML;
+        // find out which color is lighter and adjust formault accordingly
+        if (L1 > L2) {
+            contrastRatio = (parseFloat(L1) + 0.05) / (parseFloat(L2) + 0.05);
+        } else {
+            contrastRatio = (parseFloat(L2) + 0.05) / (parseFloat(L1) + 0.05);
+        }
+        var ratio = contrastRatio.toFixed(2)
+        document.getElementById('contrast').innerHTML = ratio + ":1";
+        if (ratio < 3) {
+            setPassFail('nAA', 'fail');
+            setPassFail('nAAA', 'fail');
+            setPassFail('lAA', 'fail');
+            setPassFail('lAAA', 'fail');
+        } else if (ratio >= 3 && ratio < 4.5) {
+            setPassFail('nAA', 'fail');
+            setPassFail('nAAA', 'fail');
+            setPassFail('lAA', 'pass');
+            setPassFail('lAAA', 'fail');
+        } else if (ratio >= 4.5 && ratio < 7) {
+            setPassFail('nAA', 'pass');
+            setPassFail('nAAA', 'fail');
+            setPassFail('lAA', 'pass');
+            setPassFail('lAAA', 'pass');
+        } else if (ratio >= 7) {
+            setPassFail('nAA', 'pass');
+            setPassFail('nAAA', 'pass');
+            setPassFail('lAA', 'pass');
+            setPassFail('lAAA', 'pass');
+        }
+
+
+
+    }
+
+    function setPassFail(target, passFail) {
+        var item = document.getElementById(target);
+        item.className = "";
+        switch (passFail) {
+            case 'pass':
+                item.className = "pass";
+                break;
+            case 'fail':
+                item.className = "fail";
+                break;
+
+        }
+    }
+
+    function convertColor(id, result) {
+        color = document.getElementById(id).value;
+
+        if (color == "") {
+            validateColor(id, result);
+            return;
+        }
+        color = color.toLowerCase();
+        c = w3color(color);
+        if (c.valid) {
+
+            document.getElementById(result).innerHTML = c.luminance;
+            if (id == 'color02') {
+                document.getElementById('example').style.backgroundColor = c.toRgbString();
+            }
+            if (id == "color01") {
+                //var str = "Hello World!";
+                //var result = str.fontcolor(c.toRgbString());
+                document.getElementById("foregroundExample").style.color = c.toRgbString();
+            }
+
+            evalContrast();
+
+        } else {
+            validateColor(id, result);
+        }
+    }
+
+    function validateColor(id, target) {
+        var color, c, x, i, l;
+        color = document.getElementById(id).value;
+        c = w3color(color);
+        if (color == "" || !c.valid) {
+
+        } else {
+            convertColor(id, target);
+        }
+
+    }
+
+    function submitOnEnter(e, id, target) {
+        keyboardKey = e.which || e.keyCode;
+
+        //13 is the enter key
+        if (keyboardKey == 13) {
+            validateColor(id, target);
+        }
+    }
+
+    function openForegroundTab(evt, tabName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontentFore");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinksFore");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+
+    function openBackroundTab(evt, tabName) {
+        // Declare all variables
+        var i, tabcontent, tablinks;
+
+        // Get all elements with class="tabcontent" and hide them
+        tabcontent = document.getElementsByClassName("tabcontentBack");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Get all elements with class="tablinks" and remove the class "active"
+        tablinks = document.getElementsByClassName("tablinksBack");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(" active", "");
+        }
+
+        // Show the current tab, and add an "active" class to the button that opened the tab
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+</html>

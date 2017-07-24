@@ -128,6 +128,7 @@ w3color.prototype = {
     this.lightness = color.lightness;
     this.whiteness = color.whiteness;
     this.blackness = color.blackness;
+    this.luminance = color.luminance;
     this.cyan = color.cyan;
     this.magenta = color.magenta;
     this.yellow = color.yellow;
@@ -270,12 +271,13 @@ function toColorObject(c) {
   return colorObject(rgb, a, hue, sat);
 }
 function colorObject(rgb, a, h, s) {
-  var hsl, hwb, cmyk, ncol, color, hue, sat;
+  var hsl, hwb, cmyk, ncol, color, hue, sat, lum;
   if (!rgb) {return emptyObject();}
   if (!a) {a = 1;}
   hsl = rgbToHsl(rgb.r, rgb.g, rgb.b);
   hwb = rgbToHwb(rgb.r, rgb.g, rgb.b);
   cmyk = rgbToCmyk(rgb.r, rgb.g, rgb.b);
+  lum = relativeLuminanceW3C(rgb.r, rgb.g, rgb.b);
   hue = (h || hsl.h);
   sat = (s || hsl.s);   
   ncol = hueToNcol(hue);
@@ -288,6 +290,7 @@ function colorObject(rgb, a, h, s) {
     lightness : hsl.l,
     whiteness : hwb.w,
     blackness : hwb.b,
+    luminance: lum,
     cyan : cmyk.c,
     magenta : cmyk.m,
     yellow : cmyk.y,
@@ -309,6 +312,7 @@ function emptyObject() {
     lightness : 0,
     whiteness : 0,
     blackness : 0,
+    luminance: 0,
     cyan : 0,
     magenta : 0,
     yellow : 0,
@@ -607,6 +611,21 @@ function toHex(n) {
   var hex = n.toString(16);
   while (hex.length < 2) {hex = "0" + hex; }
   return hex;
+}
+function relativeLuminanceW3C(R8bit, G8bit, B8bit) {
+
+        var RsRGB = R8bit / 255;
+        var GsRGB = G8bit / 255;
+        var BsRGB = B8bit / 255;
+
+        var R = (RsRGB <= 0.03928) ? RsRGB / 12.92 : Math.pow((RsRGB + 0.055) / 1.055, 2.4);
+        var G = (GsRGB <= 0.03928) ? GsRGB / 12.92 : Math.pow((GsRGB + 0.055) / 1.055, 2.4);
+        var B = (BsRGB <= 0.03928) ? BsRGB / 12.92 : Math.pow((BsRGB + 0.055) / 1.055, 2.4);
+
+        // For the sRGB colorspace, the relative luminance of a color is defined as: 
+        var L = 0.2126 * R + 0.7152 * G + 0.0722 * B;
+
+        return L;
 }
 function cl(x) {
   console.log(x);
