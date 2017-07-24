@@ -2,10 +2,11 @@
 
 # Parametric Color Generator
 Creates scales from a base color value and increment value.
+Checks contrast of two colors based on [W3C standards](https://www.w3.org/TR/WCAG20-TECHS/G18.html).
 
 This little app (built on Electron) was inspired by a blog post from UXPin CEO, Marcin Treder regarding defining a more structured color palette for their product. That post can be read here [One Color Palette to Rule them All](https://medium.com/@marcintreder/design-system-sprint-2-one-color-palette-to-rule-them-all-d0114ed1f659).
 
-In that post he mentions a quick tool he built, with Electron, for a simple task of generating colors based on a base value and an increment. Seemed simple enough, so I gave it a shot as well. This bit repo is a product of that effort. 
+In that post he mentions a quick tool he built, with Electron, for a simple task of generating colors based on a base value and an increment. Seemed simple enough, so I gave it a shot as well. This repo is a product of that effort. 
 
 ## To Use
 
@@ -13,9 +14,9 @@ To clone and run this repository you'll need [Git](https://git-scm.com) and [Nod
 
 ```bash
 # Clone this repository
-git clone https://github.com/nateUX/parametric-color-generator.git
+git clone https://github.com/nateUX/nates-color-tool.git
 # Go into the repository
-cd parametric-color-generator
+cd nates-color-tool
 # Install dependencies
 npm install
 # Run the app
